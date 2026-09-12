@@ -1,0 +1,5 @@
+#!/bin/sh
+# recorded: a valid path you have never set. Note the stream and the exit code.
+for a; do L="$a"; done
+echo "Config path is valid but unset: $L. The runtime default applies until you set an authored value with openclaw config set $L <value>." >&2
+exit 1

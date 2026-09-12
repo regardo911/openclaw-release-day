@@ -1,0 +1,42 @@
+# compose.example.yml — Chapter 9. A template, not a thing to start.
+#
+# This is deliberately NOT named compose.yml. Running `docker compose up` inside a clone of this
+# repo would start a second gateway against a state directory the book spends two chapters
+# warning you about. Copy it into your own private repository, fill in every angle bracket,
+# rename it there.
+#
+# Three things below are the point, and the third is the one everybody skips.
+
+services:
+  openclaw:
+    # 1. PINNED IMAGE. An exact tag. Never latest.
+    #    latest means the box silently changes version whenever something pulls, which turns
+    #    "my agent is down" into "my agent is down and I no longer know what version it is".
+    image: ghcr.io/<org>/<image>:<exact-tag>
+
+    # 2. BOUNDED RESTART. Docker's own default is no restart at all, which matches the
+    #    "it ran once, then it died overnight" symptom exactly.
+    restart: unless-stopped
+
+    # 3. PERSISTED STATE, mounted OUTSIDE the container, so replacing the container does not
+    #    replace your install. Verify by removing the container and starting a fresh one:
+    #    the agent should still know who it is.
+    volumes:
+      - <your-config-path>:/config
+      - <your-workspace-path>:/workspace
+      - <your-auth-path>:/auth
+      # logs too, or ship them off the box. A container that dies takes its filesystem with it.
+      - <your-log-path>:/logs
+
+    # THE BIND. Container images default to an exposed bind. On a machine with a public address
+    # that is the one mistake that matters. Binding to loopback keeps the port unreachable from
+    # outside the host entirely; reach it through a private network or a tunnel.
+    # If you do need it reachable, it gets authentication, and you check that from a machine
+    # outside your network rather than assuming.
+    ports:
+      - "127.0.0.1:18789:18789"
+
+    # Size the box before you install anything. If your agent ever touches a browser, budget for
+    # that browser: one headless Chromium can take a gigabyte on its own, and the kernel's
+    # out-of-memory killer picks the biggest process.
+    # oom-check.sh tells you afterwards whether that is what happened.

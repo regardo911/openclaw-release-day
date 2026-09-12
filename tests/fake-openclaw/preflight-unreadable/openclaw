@@ -1,0 +1,5 @@
+#!/bin/sh
+# recorded: a file that is not a SQLite database at all.
+echo 'status: "indeterminate"'
+echo 'reason: "SQLite integrity_check failed for <path>: file is not a database | ERR_SQLITE_ERROR"'
+exit 1

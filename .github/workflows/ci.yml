@@ -1,0 +1,31 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: shellcheck every script
+        run: |
+          shellcheck collect-inventory.sh \
+                     chapters/*/*.sh \
+                     tests/run-tests.sh \
+                     tests/fake-openclaw/*/openclaw
+
+      # no OpenClaw here and none is installed. These tests check gate logic against recorded
+      # strings; the answer about a real install comes from the reader's own machine.
+      - name: run the gate tests
+        run: |
+          # without pipefail, tee's exit 0 masks a failing run — the same silent pass
+          # the gates in this repo exist to stop.
+          set -o pipefail
+          ./tests/run-tests.sh | tee /tmp/test-output.txt
+
+      # a glob that matches nothing exits 0, and a green badge over zero tests is a lie.
+      - name: assert the run actually asserted something
+        run: grep -qE '^[1-9][0-9]* assertions, 0 failed$' /tmp/test-output.txt

@@ -1,0 +1,9 @@
+# your filled-in copies. They hold your paths, your channels and your spend.
+*.filled.md
+
+# local scratch
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+*.log
+.DS_Store

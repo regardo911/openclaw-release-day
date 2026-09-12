@@ -1,0 +1,4 @@
+#!/bin/sh
+# recorded: `openclaw database preflight <copy> --json` against a database this release wrote.
+echo '{"schema":"openclaw.state-schema-preflight.v1","targetVersion":15,"foundVersion":15,"ownership":null,"issues":[],"status":"exact","requiresWrite":false}'
+exit 0

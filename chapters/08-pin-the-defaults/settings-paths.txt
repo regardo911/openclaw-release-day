@@ -1,0 +1,11 @@
+# settings-paths.txt — Chapter 8. One config path per line. Blank lines and # are ignored.
+# These five are the ones that moved across 8.1 -> 9.4. Three of them widened who can read
+# your agent's work, and none of the moves was announced.
+#
+# Add to this file. Chapter 12 says you will: every release that adds a security-relevant
+# setting adds a line here, and that is the whole maintenance cost of the sweep.
+tools.sessions.visibility
+tools.agentToAgent.enabled
+tools.swarm.enabled
+agents.defaults.subagents.maxSpawnDepth
+gateway.cliAgents.enabled

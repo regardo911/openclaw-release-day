@@ -1,0 +1,4 @@
+#!/bin/sh
+# recorded: a path you have authored. The value alone, on stdout, exit 0.
+echo 'self'
+exit 0

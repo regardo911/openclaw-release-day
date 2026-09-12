@@ -1,0 +1,3 @@
+#!/bin/sh
+# the field is absent, so jq -r hands back the four letters n-u-l-l.
+echo '{"daily":[{"input":0,"output":0,"totalTokens":0}],"missingCostEntries":1}'

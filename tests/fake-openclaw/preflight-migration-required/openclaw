@@ -1,0 +1,5 @@
+#!/bin/sh
+# recorded: the same copy, asked by a release two schema versions ahead.
+# note the exit code. This is the state the whole gate exists for.
+echo '{"schema":"openclaw.state-schema-preflight.v1","targetVersion":17,"foundVersion":15,"ownership":null,"issues":[],"status":"migration-required","requiresWrite":true}'
+exit 0

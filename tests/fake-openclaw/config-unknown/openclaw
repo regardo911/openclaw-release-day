@@ -1,0 +1,5 @@
+#!/bin/sh
+# recorded: a path that does not exist. Same stream, same exit code, opposite fix.
+for a; do L="$a"; done
+echo "Unknown config path: $L. Run openclaw config schema to inspect valid paths." >&2
+exit 1
